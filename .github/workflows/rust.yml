@@ -1,0 +1,33 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y dbus libdbus-1-dev pkg-config
+        
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Build and Release
+        env:
+          CARGO_TERM_COLOR: always
+          PKG_CONFIG_ALLOW_CROSS: 1
+        run: cargo build --release
+      
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NekoMC
+          path: target/release/NekoMC
