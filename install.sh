@@ -2,12 +2,14 @@
 
 printf "Downloading file...\n"
 #download to $HOME/.cache
+downloaction=$HOME/.cache
+curl -L https://github.com/Insert5StarName/NekoMC/archive/refs/tags/1.0.tar.gz -o $downloaction/NekoMC.tar.gz
 
 
 # ask user where to put(waybar/polybar)
 printf "Where do you want to store the file: "
 read -r location
-cp $downloaded $location && rm -rf $downloaded
+cp $downloaction/NekoMC.tar.gz "$location" && rm -rf $downlocation/NekoMC.tar.gz
 printf "if you are using polybar, remenber to put this to your polybar config:\n\n\n"
 printf "\n[module/musics]
 type = custom/script
