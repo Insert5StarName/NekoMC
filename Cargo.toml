@@ -1,0 +1,8 @@
+[package]
+name = "NekoMC"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mpris = "2.0.0"
+
