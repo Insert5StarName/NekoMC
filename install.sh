@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # that guy dont want this way so ya :(
-
 #cargo &>/dev/null
 #if ! [[ $? -eq 0 ]]; then
 #    printf "Please install dependencys(if missing): dbus pkgconfig cargo"
@@ -9,7 +8,7 @@
 
 # he want this :((
 
-if [[ -x "`which cargo && which dbus-launch`" ]]; then
+if ! [[ -x "which cargo && which dbus-launch" ]]; then
     printf "Please install dependencys(if missing): dbus pkgconfig cargo"
 fi
 
