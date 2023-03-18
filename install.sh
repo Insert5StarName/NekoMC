@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-printf "Please install dependencys(if missing): dbus pkgconfig cargo"
-sleep 1
+cargo &>/dev/null
+if ! [[ $? -eq 0 ]]; then
+    printf "Please install dependencys(if missing): dbus pkgconfig cargo"
+fi
 
 printf "Downloading file...\n"
 #download to $HOME/.cache
