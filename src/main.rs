@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #![allow(non_snake_case)]
 use std::env;
 use std::time;
@@ -67,8 +68,8 @@ fn get_metadata() -> Option<MetaData> {
         return None;
     }
     let state_icon = match status.unwrap() {
-            PlaybackStatus::Paused => "󰐊 ",
-            PlaybackStatus::Playing => "󰏤 ",
+            PlaybackStatus::Paused => " ",
+            PlaybackStatus::Playing => " ",
             _ => "",
     };
     let playing = match status.unwrap() {
@@ -116,7 +117,7 @@ fn main() {
                     println!("");
                 } else { 
                     let unwrapedData = metaData.unwrap();
-                    println!("{}{} - {}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+                    println!("{} by {} - {}", unwrapedData.title, unwrapedData.artist, unwrapedData.status);
                 }
                 thread::sleep(dont_fry_my_cpu);
             }
@@ -128,7 +129,7 @@ fn main() {
                     println!("");
                 } else { 
                     let unwrapedData = metaData.unwrap();
-                    println!("{{ \"text\":\"{}{} - {}\" }}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+                    println!("{{ \"text\":\"{} by {} - {}\" }}", unwrapedData.title, unwrapedData.artist, unwrapedData.status);
                 }
                 thread::sleep(dont_fry_my_cpu);
             }
@@ -137,10 +138,10 @@ fn main() {
             let metaData = get_metadata();
             if metaData.is_none() {
                 println!("");
-                return;
+                return std::process::exit(0);
             }
             let unwrapedData = metaData.unwrap();
-            println!("{}{} - {}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+            println!("{} by {} - {}", unwrapedData.title, unwrapedData.artist, unwrapedData.status);
         }
         "--play" => {
             let player = get_player().expect("Could not get Player.").player;
