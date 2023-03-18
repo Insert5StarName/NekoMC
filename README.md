@@ -7,7 +7,7 @@ a waybar/general component for displaying current song data in bars like waybar 
 
 MPRIS is very widely supported, so this component should work with:
 * Firefox and Firefox based Browsers like Librewolf
-* Shit Browsers based on Chromium
+* Browsers based on Chromium
 * Spotify
 * mpd (with [mpDris2](https://github.com/eonpatapon/mpDris2))
 * VLC ( For People that don't use MPV in 2023 )
