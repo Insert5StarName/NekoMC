@@ -11,7 +11,7 @@ MPRIS is very widely supported, so this component should work with:
 * Spotify
 * mpd (with [mpDris2](https://github.com/eonpatapon/mpDris2))
 * VLC ( For People that don't use MPV in 2023 )
-* Basicly every other Music/Video player on the face of Earth
+* Basically every other Music/Video player on the face of Earth
 
 ## Install
 Clone this Repo and Install the needed dependencies (if you use NixOS you can use nix-shell)
