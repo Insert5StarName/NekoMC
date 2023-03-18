@@ -14,6 +14,10 @@ MPRIS is very widely supported, so this component should work with:
 * Basically every other Music/Video player on the face of Earth
 
 ## Install
+Get the latest release [binary](https://github.com/Insert5StarName/NekoMC/releases/tag/1.0) and move it to `/usr/bin` or your `PATH`
+or compile ur your self
+
+## Compile your self
 Clone this Repo and Install the needed dependencies (if you use NixOS you can use nix-shell)
 * Rust (Cargo, Rustc)
 * Dbus
