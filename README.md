@@ -14,6 +14,10 @@ MPRIS is very widely supported, so this component should work with:
 * Basically every other Music/Video player on the face of Earth
 
 ## Install
+#### Auto install
+There is a auto install script that you can just `./install.sh`, but you can manully install it as well.
+
+#### Manual Install
 Get the latest release [binary](https://github.com/Insert5StarName/NekoMC/releases/tag/1.0) and move it to `/usr/bin` or your `PATH`
 or compile ur your self
 
@@ -39,6 +43,16 @@ Add something like this to your waybar `config.json`:
           "on-scroll-down":"NekoMC --previous",
           "escape" : "true",
 },
+```
+
+And you can add something like this into your polybar if you are using polybar:
+```
+[module/NekoMC]
+type = custom/script
+exec = NekoMC --current-song
+tail = true
+click-left = NekoMC --toggle
+click-right = NekoMC --next
 ```
 
 
