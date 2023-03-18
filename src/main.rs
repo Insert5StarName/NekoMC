@@ -137,7 +137,7 @@ fn main() {
             let metaData = get_metadata();
             if metaData.is_none() {
                 println!("");
-                return std::process::exit(0);
+                return;
             }
             let unwrapedData = metaData.unwrap();
             println!("{}{} - {}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
