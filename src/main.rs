@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 use std::env;
 use std::time;
 use std::thread;
-
+use mpris::PlaybackStatus;
 mod utils;
 mod playerctl;
 
@@ -56,7 +56,12 @@ fn main() {
                     println!("");
                 } else { 
                     let unwrapedData = metaData.unwrap();
-                    println!("{}{} - {}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+                    let state_icon = match unwrapedData.status{
+                        PlaybackStatus::Paused => "󰐊 ",
+                        PlaybackStatus::Playing => "󰏤 ",
+                        _ => "",
+                    };
+                    println!("{}{} - {}", state_icon, unwrapedData.artist, unwrapedData.title);
                 }
                 thread::sleep(dont_fry_my_cpu);
             }
@@ -72,7 +77,12 @@ fn main() {
                     println!("");
                 } else { 
                     let unwrapedData = metaData.unwrap();
-                    println!("{{ \"text\":\"{}{} - {}\" }}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+                    let state_icon = match unwrapedData.status{
+                        PlaybackStatus::Paused => "󰐊 ",
+                        PlaybackStatus::Playing => "󰏤 ",
+                        _ => "",
+                    };
+                    println!("{{ \"text\":\"{}{} - {}\" }}", state_icon, unwrapedData.artist, unwrapedData.title);
                 }
                 thread::sleep(dont_fry_my_cpu);
             }
@@ -88,7 +98,12 @@ fn main() {
                 return;
             }
             let unwrapedData = metaData.unwrap();
-            println!("{}{} - {}", unwrapedData.status, unwrapedData.artist, unwrapedData.title);
+            let state_icon = match unwrapedData.status{
+                PlaybackStatus::Paused => "󰐊 ",
+                PlaybackStatus::Playing => "󰏤 ",
+                _ => "",
+            };
+            println!("{}{} - {}", state_icon, unwrapedData.artist, unwrapedData.title);
         }
         "--play" => playerctl::play(),
         "--pause" => playerctl::pause(),

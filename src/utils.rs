@@ -1,9 +1,8 @@
 use mpris::{PlayerFinder, Player, PlaybackStatus};
 pub struct MetaData {
-    pub status: String,
     pub title: String,
     pub artist: String,
-    pub playing: bool,
+    pub status: PlaybackStatus,
 }
 
 
@@ -26,27 +25,15 @@ pub fn get_metadata(player : Player) -> Option<MetaData> {
     }
     let metadata = metadataRaw.unwrap();
     let title = metadata.title().unwrap_or("Unknown title");
-    let artist = metadata.artists().unwrap_or((&[]).to_vec());
+    let artist = metadata.artists().unwrap_or((&["Unknown Artist"]).to_vec());
     let status = player.get_playback_status().ok();
     if status.is_none() {
         return None;
     }
-    let state_icon = match status.unwrap() {
-            PlaybackStatus::Paused => "󰐊 ",
-            PlaybackStatus::Playing => "󰏤 ",
-            _ => "",
-    };
-    let playing = match status.unwrap() {
-        PlaybackStatus::Paused => false,
-        PlaybackStatus::Playing => true,
-        _ => false,
-    };
-
     return Some(MetaData {
         title: title.to_string(),
         artist: artist.join(", "),
-        status: state_icon.to_string(),
-        playing: playing,
+        status: status.unwrap(),
     });
 
 
