@@ -15,13 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-use mpris::{PlayerFinder, Player, PlaybackStatus};
+use mpris::{PlaybackStatus, Player, PlayerFinder};
+use std::fs;
 pub struct MetaData {
     pub title: String,
     pub artist: String,
     pub status: PlaybackStatus,
 }
-
 
 pub fn get_player() -> Option<Player> {
     let finder = PlayerFinder::new().ok();
@@ -30,12 +30,12 @@ pub fn get_player() -> Option<Player> {
     }
     let player = finder.as_ref().unwrap().find_active().ok();
     if player.is_none() {
-        return None
+        return None;
     }
     return Some(player.unwrap());
 }
 
-pub fn get_metadata(player : Player) -> Option<MetaData> {
+pub fn get_metadata(player: Player) -> Option<MetaData> {
     let metadataRaw = player.get_metadata().ok();
     if metadataRaw.is_none() {
         return None;
@@ -52,6 +52,17 @@ pub fn get_metadata(player : Player) -> Option<MetaData> {
         artist: artist.join(", "),
         status: status.unwrap(),
     });
+}
 
-
+pub fn does_file_exist(path: &str) -> bool {
+    let metadata = fs::metadata(path);
+    if let Ok(metadata) = metadata {
+        if metadata.is_file() {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    };
 }

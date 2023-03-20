@@ -17,14 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #![allow(non_snake_case)]
 use std::env;
-use std::time;
-use std::thread;
-use mpris::PlaybackStatus;
-mod utils;
+use std::fs;
+
+use config::Config;
+mod cmds;
+mod config;
 mod playerctl;
+mod utils;
 
 fn main() {
-    let dont_fry_my_cpu = time::Duration::from_millis(500);    
     let args: Vec<String> = env::args().collect();
     let program = args[0].clone();
     let usage = format!("Usage: {} [option]\n", program);
@@ -37,85 +38,33 @@ fn main() {
                        --pause          Tell the player to pause.\n\
                        --next           Tell the player to play the next song.\n\
                        --previous       Tell the player to play the previous song.\n\
-                       --toggle         Toggle between playing and pause.\n";
-
-    if args.len() != 2 {
+                       --toggle         Toggle between playing and pause.\n
+                       --config         Set Config File (Must be 2nd Arguemnt)\n";
+    let configData: Config;
+    if args.len() != 2 && args.len() != 4 {
         print!("{}", usage);
         print!("{}", description);
         return;
-    }
-    match args[1].as_str() {
-        "--hook" => {
-            loop {
-                let player = utils::get_player();
-                if player.is_none() {
-                    print!("");
-                }
-                let metaData = utils::get_metadata(player.unwrap());
-                if metaData.is_none() {
-                    println!("");
-                } else { 
-                    let unwrapedData = metaData.unwrap();
-                    let state_icon = match unwrapedData.status{
-                        PlaybackStatus::Paused => "󰐊 ",
-                        PlaybackStatus::Playing => "󰏤 ",
-                        _ => "",
-                    };
-                    println!("{}{} - {}", state_icon, unwrapedData.artist, unwrapedData.title);
-                }
-                thread::sleep(dont_fry_my_cpu);
-            }
-        },
-        "--hook-waybar" => {
-            loop {
-                let player = utils::get_player();
-                if player.is_none() {
-                    print!("");
-                }
-                let metaData = utils::get_metadata(player.unwrap());
-                if metaData.is_none() {
-                    println!("");
-                } else { 
-                    let unwrapedData = metaData.unwrap();
-                    let state_icon = match unwrapedData.status{
-                        PlaybackStatus::Paused => "󰐊 ",
-                        PlaybackStatus::Playing => "󰏤 ",
-                        _ => "",
-                    };
-                    println!("{{ \"text\":\"{}{} - {}\" }}", state_icon, unwrapedData.artist, unwrapedData.title);
-                }
-                thread::sleep(dont_fry_my_cpu);
-            }
-        },
-        "--current-song" => {
-            let player = utils::get_player();
-                if player.is_none() {
-                    print!("");
-                }
-            let metaData = utils::get_metadata(player.unwrap());
-            if metaData.is_none() {
-                println!("");
-                return;
-            }
-            let unwrapedData = metaData.unwrap();
-            let state_icon = match unwrapedData.status{
-                PlaybackStatus::Paused => "󰐊 ",
-                PlaybackStatus::Playing => "󰏤 ",
-                _ => "",
-            };
-            println!("{}{} - {}", state_icon, unwrapedData.artist, unwrapedData.title);
-        }
-        "--play" => playerctl::play(),
-        "--pause" => playerctl::pause(),
-        "--next" => playerctl::next(),
-        "--previous" => playerctl::previous(),
-        "--toggle" => playerctl::toggle(),
-        _ => {
-            print!("{}: unrecognized option '{}'\n", program, args[1]);
-            print!("{}", usage);
-            print!("{}", description);
+    } else if args.len() == 4 && args[2].as_str() == "--config" {
+        let filepath = args[3].as_str();
+        if !utils::does_file_exist(filepath) {
+            println!("ERROR: Specified Config does not exist.");
             return;
         }
+        configData = config::readConfig(filepath);
+    } else if args.len() == 4 {
+        print!("{}", usage);
+        print!("{}", description);
+        return;
+    } else {
+        let combined_please_kill_me_for_doing_this =
+            std::env::var("HOME").unwrap_or("$HOME".to_owned()) + "/.config/NekoMC/config.ini";
+        let filepath: &str = &&combined_please_kill_me_for_doing_this;
+        if utils::does_file_exist(filepath) {
+            configData = config::readConfig(filepath)
+        } else {
+            configData = config::defaultConfig()
+        }
     }
-        
+    cmds::handleCMDS(args[1].as_str(), configData)
 }

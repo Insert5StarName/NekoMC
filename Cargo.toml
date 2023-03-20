@@ -5,4 +5,5 @@ edition = "2021"
 
 [dependencies]
 mpris = "2.0.0"
-
+serde = { version = "1.0.157", features = ["derive"] }
+serde_ini = "0.2.0"
