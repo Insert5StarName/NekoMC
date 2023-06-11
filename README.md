@@ -21,6 +21,9 @@ or compile it yourself
 
 ## Compile your self
 Clone this Repo and Install the needed dependencies (if you use NixOS you can use nix-shell)
+
+Required Dependencies:
+
 * Rust (Cargo, Rustc)
 * Dbus
 * Pkgconfig
