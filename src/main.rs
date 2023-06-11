@@ -91,6 +91,7 @@ fn get_metadata() -> Option<MetaData> {
 }
 
 fn main() {
+    let version = 1.0;
     let dont_fry_my_cpu = time::Duration::from_millis(500);    
     let args: Vec<String> = env::args().collect();
     let program = args[0].clone();
@@ -98,6 +99,7 @@ fn main() {
     let description = "NekoMC - New Efficient Kitten-oriented MPRIS Client\n\n\
                        Options:\n\
                        \t--help           Print this help page and exit.\n\
+                       \t--version        Print the version and exit.\n\
                        \t--hook           Print currently playing song info (name, artist, status) in a Loop.\n\
                        \t--hook-waybar    Print currently playing song info in Waybar module format in a Loop.\n\
                        \t--current-song   Print currently playing song info but not looped like the first 2 options. \n\
@@ -115,6 +117,11 @@ fn main() {
     match args[1].as_str() {
         "--help" => {
             print!("{}", description);
+            return;
+        },
+        "--version" => {
+            print!("{}", version);
+            return;
         }
         "--hook" => {
             loop {
@@ -184,7 +191,7 @@ fn main() {
             print!("{}: unrecognized option '{}'\n", program, args[1]);
             print!("{}", usage);
             print!("{}", description);
-            return;
+            return 1;
         }
     }
         
