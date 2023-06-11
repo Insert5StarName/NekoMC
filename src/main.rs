@@ -15,6 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+// TODO fix when no data been sent println!("") for both --hook and --hook-waybar
+
 #![allow(non_snake_case)]
 use std::env;
 use std::time;
@@ -67,8 +70,8 @@ fn get_metadata() -> Option<MetaData> {
         return None;
     }
     let state_icon = match status.unwrap() {
-            PlaybackStatus::Paused => "󰐊 ",
-            PlaybackStatus::Playing => "󰏤 ",
+            PlaybackStatus::Paused => " ",
+            PlaybackStatus::Playing => "  ",
             _ => "",
     };
     let playing = match status.unwrap() {
@@ -94,14 +97,15 @@ fn main() {
     let usage = format!("Usage: {} [option]\n", program);
     let description = "NekoMC - New Efficient Kitten-oriented MPRIS Client\n\n\
                        Options:\n\
-                       --hook           Print currently playing song info (name, artist, status) in a Loop.\n\
-                       --hook-waybar    Print currently playing song info in Waybar module format in a Loop.\n\
-                       --current-song   Print currently playing song info but not looped like the first 2 options. \n\
-                       --play           Tell the player to resume playing.\n\
-                       --pause          Tell the player to pause.\n\
-                       --next           Tell the player to play the next song.\n\
-                       --previous       Tell the player to play the previous song.\n\
-                       --toggle         Toggle between playing and pause.\n";
+                       \t--help           Print this help page and exit.\n\
+                       \t--hook           Print currently playing song info (name, artist, status) in a Loop.\n\
+                       \t--hook-waybar    Print currently playing song info in Waybar module format in a Loop.\n\
+                       \t--current-song   Print currently playing song info but not looped like the first 2 options. \n\
+                       \t--play           Tell the player to resume playing.\n\
+                       \t--pause          Tell the player to pause.\n\
+                       \t--next           Tell the player to play the next song.\n\
+                       \t--previous       Tell the player to play the previous song.\n\
+                       \t--toggle         Toggle between playing and pause.\n";
 
     if args.len() != 2 {
         print!("{}", usage);
@@ -109,6 +113,9 @@ fn main() {
         return;
     }
     match args[1].as_str() {
+        "--help" => {
+            print!("{}", description);
+        }
         "--hook" => {
             loop {
                 let metaData = get_metadata();
