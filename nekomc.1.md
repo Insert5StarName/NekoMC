@@ -1,7 +1,7 @@
 ---
 date: 11/19/2022
 section: 1
-title: NekoMC (New Efficient Kitten-oriented MPRIS Client)(1)
+title: NekoMC (New Efficient Kitten-oriented MPRIS Client)
 
 ---
 
