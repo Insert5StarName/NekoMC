@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #![allow(non_snake_case)]
 use std::env;
+use std::process::exit;
 use std::time;
 use std::thread;
 use mpris::PlaybackStatus;
@@ -128,7 +129,7 @@ fn main() {
             print!("{}: unrecognized option '{}'\n", program, args[1]);
             print!("{}", usage);
             print!("{}", description);
-            return 1;
+            exit(1);
         }
     }
         
