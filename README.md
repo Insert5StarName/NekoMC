@@ -14,13 +14,16 @@ MPRIS is very widely supported, so this component should work with:
 * Basically every other Music/Video player on the face of Earth
 
 ## Install
-Run `sh <(curl -L https://raw.githubusercontent.com/Insert5StarName/NekoMC/main/install.sh)` in your Terminal or
+Run `sh <(curl -fsSL https://raw.githubusercontent.com/Insert5StarName/NekoMC/main/install.sh)` in your Terminal or
 
 Get the latest release [binary](https://github.com/Insert5StarName/NekoMC/releases/tag/1.0) and move it to `/usr/bin` or your `PATH`
 or compile it yourself
 
 ## Compile your self
 Clone this Repo and Install the needed dependencies (if you use NixOS you can use nix-shell)
+
+Required Dependencies:
+
 * Rust (Cargo, Rustc)
 * Dbus
 * Pkgconfig
@@ -45,16 +48,23 @@ Add something like this to your waybar `config.json`:
 
 
 ```
-Usage: ./NekoMC [option]
+Usage: NekoMC [option]
 NekoMC - New Efficient Kitten-oriented MPRIS Client
 
 Options:
---hook           Print currently playing song info (name, artist, status) in a Loop.
---hook-waybar    Print currently playing song info in Waybar module format in a Loop.
---current-song   Print currently playing song info but not looped like the first 2 options. 
---play           Tell the player to resume playing.
---pause          Tell the player to pause.
---next           Tell the player to play the next song.
---previous       Tell the player to play the previous song.
---toggle         Toggle between playing and pause.
+    --help           Print this help page and exit.
+    --version        Print the version and exit.
+    --hook           Print currently playing song info (name, artist, status) in a Loop.
+    --hook-waybar    Print currently playing song info in Waybar module format in a Loop.
+    --current-song   Print currently playing song info but not looped like the first 2 options. 
+    --play           Tell the player to resume playing.
+    --pause          Tell the player to pause.
+    --next           Tell the player to play the next song.
+    --previous       Tell the player to play the previous song.
+    --toggle         Toggle between playing and pause.
+```
+
+## Manual page
+```
+man NekoMC
 ```

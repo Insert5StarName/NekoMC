@@ -19,5 +19,6 @@ fi
 echo "Downloading files..."
 # Implement CHECKSUMS THIS IS UNSAFE
 sudo curl -L https://github.com/Insert5StarName/NekoMC/releases/download/1.0/NekoMC -o "/usr/bin/NekoMC"
+sudo curl -L https://raw.githubusercontent.com/Insert5StarName/NekoMC/main/nekomc.1 -o "/usr/man/man1/nekomc.1"
 sudo chmod +x /usr/bin/NekoMC
 echo "Installation successful! Check the Wiki page of the Repo for info on how to use this on Bars like Polybar or Waybar."
